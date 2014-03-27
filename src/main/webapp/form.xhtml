@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<f:view contentType="text/html"
+	xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:ui="http://java.sun.com/jsf/facelets" 
+	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns:f="http://java.sun.com/jsf/core">
+<html>
+
+<h:head>
+</h:head>
+
+<h:body>
+
+<h:messages globalOnly="true"  />
+
+<h:form id="form">
+
+<h:inputText id="field" value="#{formBean.field}" label="Field">
+	<f:validateLength maximum="5" />
+</h:inputText>
+<h:messages for="field"  />
+
+<h:commandButton value="Submit" action="#{formController.submit}" />
+
+</h:form>
+</h:body>
+
+</html>
+</f:view>
