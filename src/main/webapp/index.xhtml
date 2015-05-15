@@ -15,12 +15,15 @@
 
 <h:form id="form">
 
-<h:inputText id="field" value="#{formBean.field}" label="Field">
-	<f:validateLength maximum="5" />
-</h:inputText>
-<h:messages for="field"  />
-
-<h:commandButton value="Submit" action="#{formController.submit}" />
+  <h:inputText id="field" value="#{formBean.field}" label="Field">
+  	<f:validateLength maximum="5" />
+  </h:inputText>
+  
+  <h:messages for="field"  />
+  
+  <div>
+    <h:commandButton value="Submit" action="#{formController.submit}" />
+  </div>
 
 </h:form>
 </h:body>
