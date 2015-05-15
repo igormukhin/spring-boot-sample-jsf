@@ -14,9 +14,16 @@ public class FormController {
 	private FormBean formBean;
 	
 	public void submit() {
-		FacesContext.getCurrentInstance().addMessage(null, 
-		        new FacesMessage("Value submitted: " + formBean.getField() + "."
-		                + " Reload the page to see that the value still in the view scope."));
+	    formBean.getSubmittedValues().add(formBean.getField());
+	    
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Value submitted."));
+	}
+	
+	public void reset() {
+	    formBean.getSubmittedValues().clear();
+	    formBean.setField(null);
+
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Form reset."));
 	}
 	
 }

@@ -3,6 +3,7 @@ package de.igormukhin.examples;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
+import org.primefaces.util.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.WebApplicationInitializer;
@@ -16,6 +17,9 @@ public class WebAppInitializer implements WebApplicationInitializer {
 	@Override
 	public void onStartup(ServletContext servletContext) throws ServletException {
 		logger.info("--- WebAppInitializer INITIALIZER! ---");
+		
+		servletContext.setInitParameter(Constants.ContextParams.THEME, "bootstrap");
+		servletContext.setInitParameter(Constants.ContextParams.FONT_AWESOME, "true");
 		
 		servletContext.setInitParameter("contextClass", AnnotationConfigWebApplicationContext.class.getName());
 		servletContext.setInitParameter("contextConfigLocation", ApplicationConfiguration.class.getName());

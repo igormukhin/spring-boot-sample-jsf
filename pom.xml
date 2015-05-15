@@ -19,6 +19,7 @@
 		<java.version>7</java.version>
         <tomcat.version>7.0.62</tomcat.version>
         <jsf-mojarra.version>2.2.11</jsf-mojarra.version>
+        <primefaces.version>5.2</primefaces.version>
 	</properties>
 	
 	<dependencies>
@@ -30,6 +31,20 @@
 	        <groupId>org.springframework</groupId>
 	        <artifactId>spring-web</artifactId>
 	    </dependency>
+
+        <dependency>
+            <groupId>org.primefaces</groupId>
+            <artifactId>primefaces</artifactId>
+            <version>${primefaces.version}</version>
+        </dependency>
+
+        <!-- Repository: http://repository.primefaces.org/ -->      
+        <!-- include a custom theme jar -->
+        <dependency>
+            <groupId>org.primefaces.themes</groupId>
+            <artifactId>bootstrap</artifactId>
+            <version>1.0.10</version>
+        </dependency>
 	
 		<dependency>
 			<groupId>org.glassfish</groupId>

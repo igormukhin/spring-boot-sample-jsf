@@ -3,7 +3,9 @@
 	xmlns="http://www.w3.org/1999/xhtml" 
 	xmlns:ui="http://java.sun.com/jsf/facelets" 
 	xmlns:h="http://java.sun.com/jsf/html" 
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+    xmlns:p="http://primefaces.org/ui">
 <html>
 
 <h:head>
@@ -11,19 +13,29 @@
 
 <h:body>
 
-<h:messages globalOnly="true"  />
-
 <h:form id="form">
 
-  <h:inputText id="field" value="#{formBean.field}" label="Field">
-  	<f:validateLength maximum="5" />
-  </h:inputText>
+  <p:messages globalOnly="true" />
+
+  <p:panel header="Form">
+    <p:inputText id="field" value="#{formBean.field}" pt:placeholder="Input a value" required="true">
+      <f:validateLength minimum="2" />
+    </p:inputText>
+    
+    <p:messages for="field" />
+    
+    <div>
+      <p:commandButton value="Submit" action="#{formController.submit}" ajax="false" icon="fa fa-save" />
+      <p:commandButton value="Reset (Ajax)" actionListener="#{formController.reset}" update="@form" icon="fa fa-save" />
+      <p:button value="Go to home" outcome="/index" icon="fa fa-home" />
+    </div>
+  </p:panel>
   
-  <h:messages for="field"  />
-  
-  <div>
-    <h:commandButton value="Submit" action="#{formController.submit}" />
-  </div>
+  <p:panel header="Submitted values saved in view scope">
+    <p:dataList value="#{formBean.submittedValues}" var="value" type="ordered">
+      #{value}
+    </p:dataList>
+  </p:panel>
 
 </h:form>
 </h:body>
