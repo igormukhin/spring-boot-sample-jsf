@@ -9,33 +9,58 @@
 <html>
 
 <h:head>
+  
+  <!-- Include Bootstrap responsive grid -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
+  
 </h:head>
 
 <h:body>
 
 <h:form id="form">
-
-  <p:messages globalOnly="true" />
-
-  <p:panel header="Form">
-    <p:inputText id="field" value="#{formBean.field}" pt:placeholder="Input a value" required="true">
-      <f:validateLength minimum="2" />
-    </p:inputText>
-    
-    <p:messages for="field" />
-    
-    <div>
-      <p:commandButton value="Submit" action="#{formController.submit}" ajax="false" icon="fa fa-save" />
-      <p:commandButton value="Reset (Ajax)" actionListener="#{formController.reset}" update="@form" icon="fa fa-save" />
-      <p:button value="Go to home" outcome="/index" icon="fa fa-home" />
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <p:messages globalOnly="true" />
+      </div>
     </div>
-  </p:panel>
+    <div class="row">
+      <div class="col-md-6">
+        <p:panel header="Form" styleClass="form-horizontal">
+          <div class="form-group">
+            <p:outputLabel value="Field value" for="field" styleClass="col-sm-3 control-label" />
+            <div class="col-sm-4">
+              <p:inputText id="field" value="#{formBean.field}" pt:placeholder="Input a value" required="true">
+                <f:validateLength minimum="2" />
+              </p:inputText>
+              <p:messages for="field" />
+            </div>
+          </div>
+        
+          <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-9">
+              <p:commandButton value="Submit" action="#{formController.submit}" ajax="false"
+                  icon="fa fa-save" />
+              <p:commandButton value="Reset (Ajax)" actionListener="#{formController.reset}" update="@form" icon="fa fa-save" />
+              <p:button value="Go to home" outcome="/index" icon="fa fa-home" />
+            </div>
+          </div>          
+          
+        </p:panel>
+      </div>
+      
+      <div class="col-md-6">
+        <p:panel header="Submitted values saved in view scope">
+          <p:dataList value="#{formBean.submittedValues}" var="value" type="ordered">
+            #{value}
+          </p:dataList>
+        </p:panel>
+      </div>
+      
+    </div>
+  </div>
+
   
-  <p:panel header="Submitted values saved in view scope">
-    <p:dataList value="#{formBean.submittedValues}" var="value" type="ordered">
-      #{value}
-    </p:dataList>
-  </p:panel>
 
 </h:form>
 </h:body>
