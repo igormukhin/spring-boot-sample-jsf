@@ -41,8 +41,10 @@
             <div class="col-sm-offset-3 col-sm-9">
               <p:commandButton value="Submit" action="#{formController.submit}" ajax="false"
                   icon="fa fa-save" />
-              <p:commandButton value="Reset (Ajax)" actionListener="#{formController.reset}" update="@form" icon="fa fa-save" />
-              <p:button value="Go to home" outcome="/index" icon="fa fa-home" />
+              <p:commandButton value="Reset (Ajax)" actionListener="#{formController.reset}" update="@form"
+                  icon="fa fa-trash" immediate="true" />
+              <p:button value="Go to home" outcome="/index" 
+                  icon="fa fa-home" />
             </div>
           </div>          
           

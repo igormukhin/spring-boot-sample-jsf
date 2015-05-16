@@ -1,29 +1,18 @@
 package de.igormukhin.examples;
 
+import javax.faces.application.ProjectStage;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
 import org.primefaces.util.Constants;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.WebApplicationInitializer;
-import org.springframework.web.context.ContextLoaderListener;
-import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
 public class WebAppInitializer implements WebApplicationInitializer {
 
-	private static final Logger logger = LoggerFactory.getLogger(WebAppInitializer.class);
-
-	@Override
-	public void onStartup(ServletContext servletContext) throws ServletException {
-		logger.info("--- WebAppInitializer INITIALIZER! ---");
-		
-		servletContext.setInitParameter(Constants.ContextParams.THEME, "bootstrap");
-		servletContext.setInitParameter(Constants.ContextParams.FONT_AWESOME, "true");
-		
-		servletContext.setInitParameter("contextClass", AnnotationConfigWebApplicationContext.class.getName());
-		servletContext.setInitParameter("contextConfigLocation", ApplicationConfiguration.class.getName());
-		servletContext.addListener(ContextLoaderListener.class);
-	}
-
+    @Override
+    public void onStartup(ServletContext sc) throws ServletException {
+        sc.setInitParameter(Constants.ContextParams.THEME, "bootstrap");
+        sc.setInitParameter(Constants.ContextParams.FONT_AWESOME, "true");
+        sc.setInitParameter(ProjectStage.PROJECT_STAGE_PARAM_NAME, ProjectStage.Development.name());
+    }
 }
