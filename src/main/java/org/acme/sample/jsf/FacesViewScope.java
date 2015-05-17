@@ -1,4 +1,4 @@
-package de.igormukhin.examples;
+package org.acme.sample.jsf;
 
 import java.util.Map;
 

@@ -1,15 +1,12 @@
-package de.igormukhin.examples;
+package org.acme.sample.web;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.acme.sample.jsf.FacesViewScope;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-
-// This will work with JSF, but Spring will not be able to locate and autowire this bean
-//@ManagedBean(name = "formBean")
-//@ViewScoped
 
 @Component("formBean")
 @Scope(FacesViewScope.NAME)

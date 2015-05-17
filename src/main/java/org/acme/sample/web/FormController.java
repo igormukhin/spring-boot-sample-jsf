@@ -1,4 +1,4 @@
-package de.igormukhin.examples;
+package org.acme.sample.web;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
