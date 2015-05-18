@@ -80,7 +80,7 @@ public class SpringBootFacesApplication extends SpringBootServletInitializer {
                         getServletContainerInitializerHandlesTypes(FacesInitializer.class));
                 
                 // add configuration from web.xml
-                context.addWelcomeFile("index.xhtml");
+                context.addWelcomeFile("index.jsf");
                 
                 // register additional mime-types that Spring Boot doesn't register
                 context.addMimeMapping("eot", "application/vnd.ms-fontobject");
