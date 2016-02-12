@@ -15,23 +15,28 @@
 <body>
 
 <composite:interface>
-    <composite:attribute name="value" type="org.acme.sample.jsf.predicateeditor.PredicateEditorModel" />
+    <composite:attribute name="value" type="org.acme.sample.predicateeditor.PredicateEditorModel" />
 </composite:interface>
 
 <composite:implementation>
     <h:panelGroup id="panel" layout="block">
     <table>
         <tr>
+            <th style="width: 80px">Link</th>
             <th style="width: 160px">Field</th>
             <th style="width: 160px">Oper</th>
             <th style="width: 260px">Value</th>
-            <th style="width: 160px">Actions</th>
+            <th style="width: 200px">Actions</th>
         </tr>
         <ui:repeat id="rep" value="#{cc.attrs.value.criteria}" var="criterion">
             <tr>
                 <td>
+                    <h:outputText value="#{criterion.link}" />
+                </td>
+
+                <td>
                     <p:selectOneMenu id="fld" value="#{criterion.field}" style="width: 140px">
-                        <f:selectItems value="#{cc.attrs.value.getFields(criterion)}" />
+                        <f:selectItems value="#{cc.attrs.value.getFields()}" />
                         <p:ajax process="@this" update=":#{cc.clientId}:panel" />
                     </p:selectOneMenu>
                 </td>
@@ -59,11 +64,13 @@
 
                     <p:commandButton actionListener="#{cc.attrs.value.openLookup(criterion)}" value="L"
                                      process=":#{cc.clientId}:panel" update=":#{cc.clientId}:panel"
-                                     rendered="#{cc.attrs.value.isHasLookup(criterion)}"
+                                     rendered="#{cc.attrs.value.hasLookupValues(criterion)}"
                     />
                 </td>
                 <td>
-                    <p:commandButton actionListener="#{cc.attrs.value.addCriterionAfter(criterion)}" value="+"
+                    <p:commandButton actionListener="#{cc.attrs.value.addCriterionAfter(criterion, 'AND')}" value="AND"
+                                     process=":#{cc.clientId}:panel" update=":#{cc.clientId}:panel" />
+                    <p:commandButton actionListener="#{cc.attrs.value.addCriterionAfter(criterion, 'OR')}" value="OR"
                                      process=":#{cc.clientId}:panel" update=":#{cc.clientId}:panel" />
                     <p:commandButton actionListener="#{cc.attrs.value.removeCriterion(criterion)}" value="X"
                                      process=":#{cc.clientId}:panel" update=":#{cc.clientId}:panel" immediate="true" />
@@ -71,8 +78,29 @@
             </tr>
         </ui:repeat>
 
-        <p:dialog header="Basic Dialog" widgetVar="#{cc.clientId}_dlg1" minHeight="40" modal="true" visible="#{cc.attrs.value.lookupDialogVisible}">
-            <h:inputText id="dlgvl" value="#{cc.attrs.value.lookupDialogValue}" />
+        <p:dialog header="Lookup Dialog" widgetVar="#{cc.clientId}_dlg1" minHeight="40" modal="true"
+                  visible="#{cc.attrs.value.lookupDialogVisible}" closeOnEscape="true" dynamic="true">
+            <p:ajax event="close" listener="#{cc.attrs.value.lookupDialogClosed}" />
+
+            <p:pickList id="lookupPickList" value="#{cc.attrs.value.lookupModel}" var="lookupItem"
+                        itemValue="#{lookupItem}" itemLabel="#{lookupItem}"
+                        showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains">
+
+                <f:facet name="sourceCaption">Available</f:facet>
+                <f:facet name="targetCaption">Selected</f:facet>
+
+                <!--
+                <p:column style="width:30%">
+                    <h:outputText value="#{lookupItem}" />
+                </p:column>
+
+                <p:column style="width:70%;">
+                    <h:outputText value="#{lookupItem}" />
+                </p:column>
+                -->
+
+            </p:pickList>
+
             <p:commandButton actionListener="#{cc.attrs.value.selectLookupValues()}" value="OK"
                              process=":#{cc.clientId}:panel" update=":#{cc.clientId}:panel" />
         </p:dialog>

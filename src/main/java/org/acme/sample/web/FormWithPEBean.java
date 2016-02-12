@@ -1,8 +1,10 @@
 package org.acme.sample.web;
 
 import org.acme.sample.jsf.FacesViewScope;
-import org.acme.sample.jsf.predicateeditor.Criterion;
-import org.acme.sample.jsf.predicateeditor.PredicateEditorModel;
+import org.acme.sample.predicateeditor.Criterion;
+import org.acme.sample.predicateeditor.Link;
+import org.acme.sample.predicateeditor.PredicateEditorModel;
+import org.acme.sample.predicateeditor.PredicateEditorSettings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
@@ -25,16 +27,16 @@ public class FormWithPEBean implements Serializable {
     private PredicateEditorModel predicateEditorModel2;
 
     public FormWithPEBean() {
-        predicateEditorModel = new PredicateEditorModel();
+        predicateEditorModel = new PredicateEditorModel(new PredicateEditorSettings());
         predicateEditorModel.setCriteria(new ArrayList<>(Arrays.asList(
-                new Criterion("field1", "=", "3"),
-                new Criterion("field2", "IN", "6; 5")
+                new Criterion(Link.NOOP, "field1", "=", "3"),
+                new Criterion(Link.AND, "field2", "IN", "6; 5")
         )));
 
-        predicateEditorModel2 = new PredicateEditorModel();
+        predicateEditorModel2 = new PredicateEditorModel(new PredicateEditorSettings());
         predicateEditorModel2.setCriteria(new ArrayList<>(Arrays.asList(
-                new Criterion("field3", "=", "666"),
-                new Criterion("field4", "IN", "333")
+                new Criterion(Link.NOOP, "field3", "=", "666"),
+                new Criterion(Link.OR, "field4", "IN", "333")
         )));
     }
 

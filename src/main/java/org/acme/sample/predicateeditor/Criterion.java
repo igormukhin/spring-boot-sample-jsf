@@ -1,9 +1,10 @@
-package org.acme.sample.jsf.predicateeditor;
+package org.acme.sample.predicateeditor;
 
 /**
  * Created by igor.mukhin on 12.02.2016.
  */
 public class Criterion {
+    private Link link;
     private String field;
     private String oper;
     private String value;
@@ -11,16 +12,26 @@ public class Criterion {
     public Criterion() {
     }
 
-    public Criterion(String field, String oper, String value) {
+    public Criterion(Link link, String field, String oper, String value) {
+        this.link = link;
         this.field = field;
         this.oper = oper;
         this.value = value;
     }
 
     public void copyTo(Criterion dest) {
+        dest.setLink(getLink());
         dest.setField(getField());
         dest.setOper(getOper());
         dest.setValue(getValue());
+    }
+
+    public Link getLink() {
+        return link;
+    }
+
+    public void setLink(Link link) {
+        this.link = link;
     }
 
     public String getField() {
@@ -50,7 +61,8 @@ public class Criterion {
     @Override
     public String toString() {
         return "Criterion{" +
-                "field='" + field + '\'' +
+                "link=" + link +
+                ", field='" + field + '\'' +
                 ", oper='" + oper + '\'' +
                 ", value='" + value + '\'' +
                 '}';
