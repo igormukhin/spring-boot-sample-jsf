@@ -1,7 +1,6 @@
 package org.acme.sample.jsf.predicateeditor;
 
 
-import org.acme.sample.web.FormBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,11 +25,11 @@ public class PredicateValueEditor extends UIPanel {
         criterion
     }
 
-    public void setCriterion(FormBean.Criterion criterion) {
+    public void setCriterion(Criterion criterion) {
         getStateHelper().put(PropertyKeys.criterion, criterion);
     }
-    public FormBean.Criterion getSurvey() {
-        return (FormBean.Criterion) getStateHelper().eval(PropertyKeys.criterion);
+    public Criterion getSurvey() {
+        return (Criterion) getStateHelper().eval(PropertyKeys.criterion);
     }
 
     @Override

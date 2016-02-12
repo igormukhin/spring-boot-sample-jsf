@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+        PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:composite="http://java.sun.com/jsf/composite"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<head><title>Predicate Editor</title></head>
+<body>
+
+<composite:interface>
+    <composite:attribute name="value" type="org.acme.sample.jsf.predicateeditor.PredicateEditorModel" />
+</composite:interface>
+
+<composite:implementation>
+    <h:panelGroup id="panel" layout="block">
+    <table>
+        <tr>
+            <th style="width: 160px">Field</th>
+            <th style="width: 160px">Oper</th>
+            <th style="width: 260px">Value</th>
+            <th style="width: 160px">Actions</th>
+        </tr>
+        <ui:repeat id="rep" value="#{cc.attrs.value.criteria}" var="criterion">
+            <tr>
+                <td>
+                    <p:selectOneMenu id="fld" value="#{criterion.field}" style="width: 140px">
+                        <f:selectItems value="#{cc.attrs.value.getFields(criterion)}" />
+                        <p:ajax process="@this" update=":#{cc.clientId}:panel" />
+                    </p:selectOneMenu>
+                </td>
+
+                <td>
+                    <p:selectOneMenu id="oper" value="#{criterion.oper}" style="width: 120px">
+                        <f:selectItems value="#{cc.attrs.value.getOperations(criterion)}" />
+                        <p:ajax process="@this" update=":#{cc.clientId}:panel" />
+                    </p:selectOneMenu>
+                </td>
+
+                <td>
+                    <!--
+                      Folgende Idee für diesen Bereich:
+
+                      < pe:valueEditor id="ve" criterion="criterion" / >
+                      Diese Komponente leitet von ganz normal h:inputText ab,
+                      und erweitert diese dynamisch um Validatoren und Converter,
+                      rendert auch bedingt ein Kalendar-Icon.
+
+                    -->
+
+                    <h:inputText id="vl" value="#{criterion.value}" />
+                    <!-- < local:predicateValueEditor criterion="#{criterion}" /> -->
+
+                    <p:commandButton actionListener="#{cc.attrs.value.openLookup(criterion)}" value="L"
+                                     process=":#{cc.clientId}:panel" update=":#{cc.clientId}:panel"
+                                     rendered="#{cc.attrs.value.isHasLookup(criterion)}"
+                    />
+                </td>
+                <td>
+                    <p:commandButton actionListener="#{cc.attrs.value.addCriterionAfter(criterion)}" value="+"
+                                     process=":#{cc.clientId}:panel" update=":#{cc.clientId}:panel" />
+                    <p:commandButton actionListener="#{cc.attrs.value.removeCriterion(criterion)}" value="X"
+                                     process=":#{cc.clientId}:panel" update=":#{cc.clientId}:panel" immediate="true" />
+                </td>
+            </tr>
+        </ui:repeat>
+
+        <p:dialog header="Basic Dialog" widgetVar="#{cc.clientId}_dlg1" minHeight="40" modal="true" visible="#{cc.attrs.value.lookupDialogVisible}">
+            <h:inputText id="dlgvl" value="#{cc.attrs.value.lookupDialogValue}" />
+            <p:commandButton actionListener="#{cc.attrs.value.selectLookupValues()}" value="OK"
+                             process=":#{cc.clientId}:panel" update=":#{cc.clientId}:panel" />
+        </p:dialog>
+    </table>
+    </h:panelGroup>
+
+</composite:implementation>
+
+</body>
+</html>

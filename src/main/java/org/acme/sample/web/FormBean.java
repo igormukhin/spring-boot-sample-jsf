@@ -1,6 +1,7 @@
 package org.acme.sample.web;
 
 import org.acme.sample.jsf.FacesViewScope;
+import org.acme.sample.jsf.predicateeditor.Criterion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
@@ -34,7 +35,7 @@ public class FormBean implements Serializable {
 
     private boolean lookupDialogVisible = false;
 
-	public String getField() {
+    public String getField() {
 		return field;
 	}
 
@@ -114,7 +115,7 @@ public class FormBean implements Serializable {
 
     public void openLookup(Criterion criterion) {
         setCriterion(criterion);
-        setLookupDialogValue(criterion.value);
+        setLookupDialogValue(criterion.getValue());
         setLookupDialogVisible(true);
     }
 
@@ -133,59 +134,5 @@ public class FormBean implements Serializable {
 
     public boolean isHasLookup(Criterion criterion) {
         return (!criterion.getField().endsWith("1"));
-    }
-
-    public static class Criterion {
-		private String field;
-		private String oper;
-		private String value;
-
-		public Criterion() {
-		}
-
-		public Criterion(String field, String oper, String value) {
-			this.field = field;
-			this.oper = oper;
-			this.value = value;
-		}
-
-        public void copyTo(Criterion dest) {
-            dest.setField(getField());
-            dest.setOper(getOper());
-            dest.setValue(getValue());
-        }
-
-        public String getField() {
-			return field;
-		}
-
-		public void setField(String field) {
-			this.field = field;
-		}
-
-		public String getOper() {
-			return oper;
-		}
-
-		public void setOper(String oper) {
-			this.oper = oper;
-		}
-
-		public String getValue() {
-			return value;
-		}
-
-		public void setValue(String value) {
-			this.value = value;
-		}
-
-        @Override
-        public String toString() {
-            return "Criterion{" +
-                    "field='" + field + '\'' +
-                    ", oper='" + oper + '\'' +
-                    ", value='" + value + '\'' +
-                    '}';
-        }
     }
 }
