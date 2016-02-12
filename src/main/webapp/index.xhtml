@@ -1,11 +1,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <f:view contentType="text/html"
-	xmlns="http://www.w3.org/1999/xhtml" 
-	xmlns:ui="http://java.sun.com/jsf/facelets" 
-	xmlns:h="http://java.sun.com/jsf/html" 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
     xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
-    xmlns:p="http://primefaces.org/ui">
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:local="http://xmlns.jcp.org/jsf/component">
 <html>
 
 <h:head>
@@ -59,8 +60,77 @@
           </p:dataList>
         </p:panel>
       </div>
-      
+
+
     </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <!-- < local :predicateEditor  / >-->
+      </div>
+    </div>
+
+    <div class="row">
+      <div>
+        <p:panel id="pe" header="Predicate Editor">
+          <table>
+            <tr>
+              <th style="width: 160px">Field</th>
+              <th style="width: 160px">Oper</th>
+              <th style="width: 260px">Value</th>
+              <th style="width: 160px">Actions</th>
+            </tr>
+            <ui:repeat id="rep" value="#{formBean.criteria}" var="criterion">
+              <tr>
+                <td>
+                  <p:selectOneMenu id="fld" value="#{criterion.field}" style="width: 140px">
+                    <f:selectItems value="#{formBean.getFields(criterion)}" />
+                    <p:ajax process="@this" update=":form:pe" />
+                  </p:selectOneMenu>
+                </td>
+
+                <td>
+                  <p:selectOneMenu id="oper" value="#{criterion.oper}" style="width: 120px">
+                    <f:selectItems value="#{formBean.getOperations(criterion)}" />
+                    <p:ajax process="@this" update=":form:pe" />
+                  </p:selectOneMenu>
+                </td>
+
+                <td>
+                  <!--
+                    Folgende Idee für diesen Bereich:
+
+                    < pe:valueEditor id="ve" criterion="criterion" / >
+                    Diese Komponente leitet von ganz normal h:inputText ab,
+                    und erweitert diese dynamisch um Validatoren und Converter,
+                    rendert auch bedingt ein Kalendar-Icon.
+
+                  -->
+
+                  <h:inputText id="vl" value="#{criterion.value}" />
+                  <!-- < local:predicateValueEditor criterion="#{criterion}" /> -->
+
+                  <p:commandButton actionListener="#{formBean.openLookup(criterion)}" value="L" process=":form:pe" update=":form:pe"
+                                   rendered="#{formBean.isHasLookup(criterion)}"
+                  />
+                </td>
+                <td>
+                  <p:commandButton actionListener="#{formBean.addCriterionAfter(criterion)}" value="+" process=":form:pe" update=":form:pe" />
+                  <p:commandButton actionListener="#{formBean.removeCriterion(criterion)}" value="X" process=":form:pe" update=":form:pe" immediate="true" />
+                </td>
+              </tr>
+            </ui:repeat>
+
+            <p:dialog header="Basic Dialog" widgetVar="dlg1" minHeight="40" modal="true" visible="#{formBean.lookupDialogVisible}">
+              <h:inputText id="dlgvl" value="#{formBean.lookupDialogValue}" />
+              <p:commandButton actionListener="#{formBean.selectLookupValues()}" value="OK" process=":form:pe" update=":form:pe" />
+            </p:dialog>
+          </table>
+        </p:panel>
+      </div>
+
+    </div>
+
   </div>
 
 </h:form>

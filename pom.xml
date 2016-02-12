@@ -23,7 +23,7 @@
         <tomcat.version>7.0.62</tomcat.version>
         
         <jsf-mojarra.version>2.2.11</jsf-mojarra.version>
-        <primefaces.version>5.2</primefaces.version>
+        <primefaces.version>5.3</primefaces.version>
 	</properties>
 	
 	<dependencies>
@@ -89,8 +89,8 @@
                 <configuration>
                     <!-- Eclipse: If Eclipse configured to refresh the workspace automatically,
                                   "mvn spring-boot:run" can fail in some rare cases.
-                    -->
                     <addResources>false</addResources>
+                    -->
                 </configuration>
             </plugin>
         </plugins>

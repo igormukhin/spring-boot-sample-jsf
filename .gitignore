@@ -11,6 +11,8 @@
 /.project
 /.settings
 /.metadata
+/.idea/
+/*.iml
 
 # Git
 !.gitignore
