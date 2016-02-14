@@ -1,10 +1,10 @@
 package org.acme.sample.predicateeditor;
 
-import org.primefaces.model.DualListModel;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.primefaces.model.DualListModel;
 
 /**
  * Created by igor.mukhin on 12.02.2016.
@@ -17,15 +17,8 @@ public class PredicateEditorModel implements Serializable {
     private DualListModel<String> lookupModel;
 
     private boolean lookupDialogVisible = false;
-
-    private PredicateEditorSettings settings;
-
-    public PredicateEditorModel(PredicateEditorSettings settings) {
-        this.settings = settings;
-    }
-
-    public PredicateEditorSettings getSettings() {
-        return settings;
+    
+    public PredicateEditorModel() {
     }
 
     public List<Criterion> getCriteria() {
@@ -58,61 +51,6 @@ public class PredicateEditorModel implements Serializable {
 
     public void setLookupDialogVisible(boolean lookupDialogVisible) {
         this.lookupDialogVisible = lookupDialogVisible;
-    }
-
-    public void removeCriterion(Criterion toDelete) {
-        List<Criterion> criteria = getCriteria();
-
-        criteria.remove(toDelete);
-
-        if (criteria.isEmpty()) {
-            addCriterionAfter(null, Link.NOOP.name());
-        }
-
-    }
-
-    public void addCriterionAfter(Criterion after, String operationId) {
-        Criterion criterion = new Criterion(Link.valueOf(operationId), "field1", "IN", "");
-
-        List<Criterion> criteria = getCriteria();
-        int afterIndex = criteria.indexOf(after) + 1;
-        criteria.add(afterIndex, criterion);
-    }
-
-    public List<String> getFields() {
-        return settings.getFields();
-    }
-
-    public List<String> getOperations(Criterion criterion) {
-        return settings.getOperations(criterion.getField());
-    }
-
-    public void openLookup(Criterion criterion) {
-        setCriterion(criterion);
-        setLookupDialogVisible(true);
-
-        List<String> current = PredicateEditorUtils.inputTextToStringList(criterion.getValue());
-        List<String> source = settings.getLookupOptions(criterion);
-        List<String> target = new ArrayList(source);
-        target.retainAll(current);
-        source.removeAll(target);
-
-        DualListModel<String> lkModel = new DualListModel<>(source, target);
-
-        setLookupModel(lkModel);
-    }
-
-    public void selectLookupValues() {
-        getCriterion().setValue(PredicateEditorUtils.stringListToInputText(getLookupModel().getTarget()));
-        setLookupDialogVisible(false);
-    }
-
-    public boolean hasLookupValues(Criterion criterion) {
-        return settings.hasLookupValues(criterion);
-    }
-
-    public void lookupDialogClosed() {
-        setLookupDialogVisible(false);
     }
 
 }

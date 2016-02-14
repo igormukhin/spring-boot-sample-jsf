@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by igor.mukhin on 12.02.2016.
  */
-public class PredicateEditorSettings {
+public class PredicateEditorDataProvider {
 
     private List<String> fields = new ArrayList<String>(Arrays.asList(
                 "field1", "field2", "field3", "field4"

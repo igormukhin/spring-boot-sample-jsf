@@ -68,7 +68,8 @@
     <div class="row">
       <div class="col-md-12">
         <p:panel header="Editor 1">
-          <pbt:predicateEditor id="pe1" value="#{formWithPEBean.predicateEditorModel}" />
+          <pbt:predicateEditor id="pe1" model="#{formBean.predicateEditorModel1}" 
+                dataProvider="#{formController.predicateEditorDataProvider1}" />
         </p:panel>
       </div>
     </div>
@@ -76,7 +77,8 @@
     <div class="row">
       <div class="col-md-12">
         <p:panel header="Editor 2">
-          <pbt:predicateEditor id="pe2" value="#{formWithPEBean.predicateEditorModel2}" />
+          <pbt:predicateEditor id="pe2" model="#{formBean.predicateEditorModel2}" 
+                dataProvider="#{formController.predicateEditorDataProvider2}" />
         </p:panel>
       </div>
     </div>

@@ -15,7 +15,8 @@
 <body>
 
 <composite:interface>
-    <composite:attribute name="value" type="org.acme.sample.predicateeditor.PredicateEditorModel" />
+    <composite:attribute name="model" type="org.acme.sample.predicateeditor.PredicateEditorModel" />
+    <composite:attribute name="dataProvider" type="org.acme.sample.predicateeditor.PredicateEditorDataProvider" />
 </composite:interface>
 
 <composite:implementation>
@@ -28,7 +29,7 @@
             <th style="width: 260px">Value</th>
             <th style="width: 200px">Actions</th>
         </tr>
-        <ui:repeat id="rep" value="#{cc.attrs.value.criteria}" var="criterion">
+        <ui:repeat id="rep" value="#{cc.attrs.model.criteria}" var="criterion">
             <tr>
                 <td>
                     <h:outputText value="#{criterion.link}" />
@@ -36,14 +37,14 @@
 
                 <td>
                     <p:selectOneMenu id="fld" value="#{criterion.field}" style="width: 140px">
-                        <f:selectItems value="#{cc.attrs.value.getFields()}" />
+                        <f:selectItems value="#{predicateEditor.getFields(cc)}" />
                         <p:ajax process="@this" update=":#{cc.clientId}:panel" />
                     </p:selectOneMenu>
                 </td>
 
                 <td>
                     <p:selectOneMenu id="oper" value="#{criterion.oper}" style="width: 120px">
-                        <f:selectItems value="#{cc.attrs.value.getOperations(criterion)}" />
+                        <f:selectItems value="#{predicateEditor.getOperations(cc, criterion)}" />
                         <p:ajax process="@this" update=":#{cc.clientId}:panel" />
                     </p:selectOneMenu>
                 </td>
@@ -62,27 +63,27 @@
                     <h:inputText id="vl" value="#{criterion.value}" />
                     <!-- < local:predicateValueEditor criterion="#{criterion}" /> -->
 
-                    <p:commandButton actionListener="#{cc.attrs.value.openLookup(criterion)}" value="L"
+                    <p:commandButton actionListener="#{predicateEditor.openLookup(cc, criterion)}" value="L"
                                      process=":#{cc.clientId}:panel" update=":#{cc.clientId}:panel"
-                                     rendered="#{cc.attrs.value.hasLookupValues(criterion)}"
+                                     rendered="#{predicateEditor.hasLookupValues(cc, criterion)}"
                     />
                 </td>
                 <td>
-                    <p:commandButton actionListener="#{cc.attrs.value.addCriterionAfter(criterion, 'AND')}" value="AND"
+                    <p:commandButton actionListener="#{predicateEditor.addCriterionAfter(cc, criterion, 'AND')}" value="AND"
                                      process=":#{cc.clientId}:panel" update=":#{cc.clientId}:panel" />
-                    <p:commandButton actionListener="#{cc.attrs.value.addCriterionAfter(criterion, 'OR')}" value="OR"
+                    <p:commandButton actionListener="#{predicateEditor.addCriterionAfter(cc, criterion, 'OR')}" value="OR"
                                      process=":#{cc.clientId}:panel" update=":#{cc.clientId}:panel" />
-                    <p:commandButton actionListener="#{cc.attrs.value.removeCriterion(criterion)}" value="X"
+                    <p:commandButton actionListener="#{predicateEditor.removeCriterion(cc, criterion)}" value="X"
                                      process=":#{cc.clientId}:panel" update=":#{cc.clientId}:panel" immediate="true" />
                 </td>
             </tr>
         </ui:repeat>
 
         <p:dialog header="Lookup Dialog" widgetVar="#{cc.clientId}_dlg1" minHeight="40" modal="true"
-                  visible="#{cc.attrs.value.lookupDialogVisible}" closeOnEscape="true" dynamic="true">
+                  visible="#{cc.attrs.model.lookupDialogVisible}" closeOnEscape="true" dynamic="true">
             <p:ajax event="close" listener="#{cc.attrs.value.lookupDialogClosed}" />
 
-            <p:pickList id="lookupPickList" value="#{cc.attrs.value.lookupModel}" var="lookupItem"
+            <p:pickList id="lookupPickList" value="#{cc.attrs.model.lookupModel}" var="lookupItem"
                         itemValue="#{lookupItem}" itemLabel="#{lookupItem}"
                         showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains">
 
@@ -101,7 +102,7 @@
 
             </p:pickList>
 
-            <p:commandButton actionListener="#{cc.attrs.value.selectLookupValues()}" value="OK"
+            <p:commandButton actionListener="#{predicateEditor.selectLookupValues(cc)}" value="OK"
                              process=":#{cc.clientId}:panel" update=":#{cc.clientId}:panel" />
         </p:dialog>
     </table>
