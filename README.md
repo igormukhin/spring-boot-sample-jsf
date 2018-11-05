@@ -1,3 +1,5 @@
+ATTENTION: I do not recommend this example anymore! Better use [JoinFaces](http://joinfaces.org/)
+
 Spring Boot With JSF Sample
 =================================================================
 
